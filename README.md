@@ -1,11 +1,4 @@
 
-Right, James — here’s the full Nova app, crafted specifically for GitHub Pages, with:
-
-Dark layout styled for clean mobile viewing
-
-Nova voice + text
-
-Button 
 
 <!DOCTYPE html>
 <html lang="en">
