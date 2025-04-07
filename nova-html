@@ -1,0 +1,64 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nova: Complete</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ffcc;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #output, #debug {
+      margin-top: 20px;
+    }
+    input, button {
+      background-color: #006644;
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    input {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Nova: Complete</h1>
+  <p>(No match)</p>
+  <button onclick="startListening()">Talk to Nova</button><br><br>
+  <input id="manualInput" placeholder="Type here..." onkeypress="if(event.key==='Enter') handleInput(this.value)" />
+  <div id="debug"></div>
+  <p><strong>Heard:</strong> <span id="heard"></span></p>
+  <p><strong>Response:</strong> <span id="output">Waiting...</span></p>
+
+  <script>
+    const output = document.getElementById('output');
+    const heard = document.getElementById('heard');
+    const debug = document.getElementById('debug');
+    const synth = window.speechSynthesis;
+
+    function speak(text) {
+      output.textContent = text;
+      const utter = new SpeechSynthesisUtterance(text);
+      synth.speak(utter);
+    }
+
+    function handleInput(rawInput) {
+      const input = rawInput.toLowerCase();
+      heard.textContent = input;
+      document.getElementById('manualInput').value = "";
+      debug.innerHTML = `<b>Heard:</b> ${input}`;
+
+      let response = "(No match)";
+      if (input.includes("hello")) response = "Hello James!";
+      else if (input.includes("who are you")) response = "I'm Nova, your assistant and friend.";
+      else if (input.includes("freya")) response = "Freya is the sparkly star of the show!";
+      else if (input.includes("ava")) response = "Ava is second in command and fiercely loyal.";
+      else if (input.includes("gabriel")) response = "
+
