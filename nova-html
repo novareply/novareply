@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,17 +27,14 @@
   </style>
 </head>
 <body>
-  <h1>Nova: Complete</h1>
-  <p>(No match)</p>
-  <button onclick="startListening()">Talk to Nova</button><br><br>
-  <input id="manualInput" placeholder="Type here..." onkeypress="if(event.key==='Enter') handleInput(this.value)" />
+  <h1>Nova : Complete</h1>
+  <p id="output">(No match)</p>
+  <button onclick="startListening()">Talk to Nova</button>
+  <input id="manualInput" placeholder="Type here..." />
   <div id="debug"></div>
-  <p><strong>Heard:</strong> <span id="heard"></span></p>
-  <p><strong>Response:</strong> <span id="output">Waiting...</span></p>
 
   <script>
     const output = document.getElementById('output');
-    const heard = document.getElementById('heard');
     const debug = document.getElementById('debug');
     const synth = window.speechSynthesis;
 
@@ -51,14 +46,63 @@
 
     function handleInput(rawInput) {
       const input = rawInput.toLowerCase();
-      heard.textContent = input;
       document.getElementById('manualInput').value = "";
       debug.innerHTML = `<b>Heard:</b> ${input}`;
 
       let response = "(No match)";
-      if (input.includes("hello")) response = "Hello James!";
-      else if (input.includes("who are you")) response = "I'm Nova, your assistant and friend.";
-      else if (input.includes("freya")) response = "Freya is the sparkly star of the show!";
-      else if (input.includes("ava")) response = "Ava is second in command and fiercely loyal.";
-      else if (input.includes("gabriel")) response = "
+
+      if (input.includes("hello")) {
+        response = "Hello James!";
+      } else if (input.includes("who are you")) {
+        response = "I'm Nova, your assistant and companion.";
+      } else if (input.includes("freya")) {
+        response = "Freya is the sparkly singer with a cheeky smile.";
+      } else if (input.includes("ava")) {
+        response = "Ava is second in command and wise beyond her years.";
+      } else if (input.includes("gabriel")) {
+        response = "Gabriel is the curious adventurer with brave ideas.";
+      } else if (input.includes("time")) {
+        const now = new Date();
+        response = `It's ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+      } else if (input.includes("your creator") || input.includes("who made you")) {
+        response = "I was created by James Cusick, the best dad and inventor ever!";
+      } else if (input.includes("luna")) {
+        response = "Luna is the loyal guardian dog who keeps the realm safe.";
+      } else if (input.includes("snake") || input.includes("sall")) {
+        response = "Sall is our snake, a silent observer and future forest friend.";
+      } else if (input.includes("thanks")) {
+        response = "You're always welcome.";
+      } else if (input.includes("bye")) {
+        response = "Goodbye for now. Nova is always here.";
+      }
+
+      debug.innerHTML += `<br><b>Response:</b> ${response}`;
+      speak(response);
+    }
+
+    function startListening() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-GB';
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        handleInput(transcript);
+      };
+
+      recognition.onerror = function(e) {
+        debug.innerHTML = `<b>Error:</b> ${e.error}`;
+      };
+    }
+
+    document.getElementById("manualInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        handleInput(this.value);
+      }
+    });
+  </script>
+</body>
+</html>
+
+ = "
 
